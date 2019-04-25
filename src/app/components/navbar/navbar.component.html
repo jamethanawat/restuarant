@@ -1,0 +1,332 @@
+
+<nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <a class="navbar-brand" >{{getTitle()}}</a>
+        </div>
+        <button mat-raised-button class="navbar-toggler" type="button" (click)="sidebarToggle()">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <!--<form class="navbar-form">
+                <div class="input-group no-border">
+                    <input type="text" value="" class="form-control" placeholder="Search...">
+                    <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </form>-->
+            <ul class="navbar-nav">
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="Bill">
+                        <i class="material-icons">shopping_cart</i>
+                        <p>
+                            <span class="d-lg-none d-md-block">Stats</span>
+                        </p>
+                    </a>
+                </li> -->
+                <li class="nav-item dropdown">
+                    <button class="nav-link btn btn-link" (click)="removenotibill()" id="navbarDropdownMenuLink2"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" matTooltip="list order">
+                        <i class="material-icons">shopping_cart</i>
+                        <div *ngIf="checknotibill()">
+                            <span class="notification">N</span>
+                        </div>
+
+                        <p>
+                            <span class="d-lg-none d-md-block">Some Actions</span>
+                        </p>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink2">
+
+                        <table class="table table-striped table table-hover"style=' width:430px '>
+                            <thead>
+                                <tr align="center">
+
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Price</th>
+
+                                    <!-- <th *ngIf="admin()" scope="col">Option</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let index of listNotibill">
+
+                                    <td align="center">{{index.menu}}</td>
+                                    <td align="center">1</td>
+                                    <td align="center">{{index.price}}</td>
+
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </li>
+
+
+
+                <li class="nav-item dropdown">
+                    <button class="nav-link btn btn-link" (click)="removenoti()" id="navbarDropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" matTooltip="notifications">
+                        <i class="material-icons">notifications</i>
+                        <div *ngIf="checknoti()">
+                            <span class="notification">{{numbernoti}}</span>
+                        </div>
+
+                        <p>
+                            <span class="d-lg-none d-md-block">Some Actions</span>
+                        </p>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+
+                        <div *ngFor="let item of listNoti">
+                            <a class="dropdown-item">{{item.list}}</a>
+                            <!-- <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <i class="material-icons">close</i>
+                            </button> -->
+        
+                        </div>
+
+                    </div>
+
+                </li>
+                <li class="nav-item">
+                    <!-- <a class="nav-link" (click)="openModal(template)">
+                        <i class="material-icons">person</i>
+                        <p>
+                            <span class="d-lg-none d-md-block">Account</span>
+                        </p>
+                    </a> -->
+                    <button class="nav-link btn btn-link" 
+                        aria-haspopup="true" aria-expanded="false"(click)="openModal(template)"matTooltip="Singin / Singup">
+                     
+                        <i class="material-icons">person</i>
+                        <p>
+                            <span class="d-lg-none d-md-block">Account</span>
+                        </p>
+                    </button>
+                </li>
+
+
+            </ul>
+
+
+        </div>
+    </div>
+
+</nav>
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{textheader}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form (ngSubmit)="submitform($event)"  align="center">
+
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <!-- <div class="card"> -->
+                    
+                    <div class="card-body">
+                        
+                            <div class="form-group row">
+                                <label for="email_address" class="col-md-4 col-form-label text-md-right">Username</label>
+                                <div class="col-md-6">
+                                    <input type="text"  class="form-control" name="Username" value={{textuser}} required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                <div class="col-md-6">
+                                    <input type="password"  id="password" class="form-control" name="password" value={{textpass}} required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-4">
+                                <label> Don't have an account?<b style="color:rgb(88, 88, 218)"  (click)="modalRef.hide()"(click)="openModalsingup(signup)" > Sign Up</b></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 offset-md-4">
+                                <button type="submit"class="{{colorbutton}}"><i class={{icon}}></i>&nbsp;&nbsp;&nbsp;
+                                    {{button}}
+                                </button>
+                                
+                            </div>
+                    </div>
+                 
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</form>
+
+</ng-template>
+<ng-template #signup>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Sign up</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <!-- <div class="card"> -->
+
+                        <div align="center">
+                            <div class="modal-body">
+                                <img src="https://image.flaticon.com/icons/svg/40/40358.svg" height="80" width="180">
+                                <br /><br />
+                                <P>Create Account </P>
+                            </div>
+
+                        </div>
+                        <div class="modal-body">
+                        <form (ngSubmit)="onSubmitinsert($event)" style="left:500px;" align="center">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example">
+                                        <input matInput placeholder="First Name" name="name">
+                                        <label style="color:tomato;" *ngIf="checkname()">* required</label>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example">
+                                        <input matInput placeholder="Last Name" name="lastname">
+                                        <label style="color:tomato;" *ngIf="checklastname()">* required</label>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example">
+                                        <input matInput placeholder="E-Mail" type="email" name="email">
+                                        <label style="color:tomato;" *ngIf="checkemail()">* required</label>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example">
+                                        <input list="tys" matInput placeholder="Telephone" type="text" name="telephone">
+                                        <label style="color:tomato;" *ngIf="checktelephone()">* required</label>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <br>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="example">
+                                        <input matInput placeholder="Username" type="text" name="username">
+                                        <label style="color:tomato;" *ngIf="checkuser()">* required</label>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-6">
+                                            <mat-form-field class="example">
+                                                <input matInput placeholder="Password" type="password" name="password">
+                                                <label style="color:tomato;" *ngIf="checkpass1()">* Use 8 characters more</label>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="example">
+                                                <input matInput placeholder="Confirm Password" type="password" name="cpassword">
+                                                <label style="color:tomato;" *ngIf="checkpass2()">* Use 8 characters more</label>
+                                                <label style="color:tomato;" *ngIf="checkpassmatch()"> * Password dont match. Try again.</label>
+                                            </mat-form-field>
+                                        </div>
+                            </div>
+                            <div align="right" class="col-xs-8">
+                                <button type="submit" class="btn btn-success btn-round"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirm</button>
+                                <button type="button" class="btn btn-danger btn-round"
+                                    (click)="modalRef.hide()"><i class="fa fa-close"></i>&nbsp;&nbsp;&nbsp;Close</button>
+
+                            </div>
+                        </form>
+                    </div>
+                
+                 
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+    
+
+</ng-template>
+<!-- <ng-template  #template> -->
+
+
+
+
+
+
+<!--  -->
+<!--
+
+<nav class="navbar navbar-transparent navbar-absolute">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button mat-raised-button type="button" class="navbar-toggle" data-toggle="collapse" (click)="sidebarToggle()">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">{{getTitle()}}</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="material-icons">dashboard</i>
+                        <p class="hidden-lg hidden-md">Dashboard</p>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="material-icons">notifications</i>
+                        <span class="notification">5</span>
+                        <p class="hidden-lg hidden-md">Notifications</p>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Mike John responded to your email</a></li>
+                        <li><a href="#">You have 5 new tasks</a></li>
+                        <li><a href="#">You're now friend with Andrew</a></li>
+                        <li><a href="#">Another Notification</a></li>
+                        <li><a href="#">Another One</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                       <i class="material-icons">person</i>
+                       <p class="hidden-lg hidden-md">Profile</p>
+                    </a>
+                </li>
+            </ul>
+
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group form-black is-empty">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <span class="material-input"></span>
+                </div>
+                <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                    <i class="material-icons">search</i><div class="ripple-container"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+</nav> -->

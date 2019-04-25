@@ -1,0 +1,332 @@
+<!--  <input class="form-control" placeholder="  Search for Name" (keyup)="onKey($event)">-->
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-lg-8 col-md-10 ml-auto mr-auto">
+                    <div style="width:700px" class="input-group no-border">
+                        <input type="text" value="" class="form-control" (keyup)="onKey($event)"
+                            placeholder="Search For Name and Type ...">
+                        <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                            <i class="material-icons">search</i>
+                            <div class="ripple-container"></div>
+                        </button>
+                        <div *ngIf="admin()">
+                            <button mat-raised-button class="btn btn-danger btn-round "matTooltip="Insert food to list menu" matTooltipPosition="above" style="left:350px"
+                                (click)="openModalWithClassinsert(insert)" > <i class="fa fa-plus"></i><span>&nbsp;&nbsp;&nbsp;Add</span></button>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card">
+
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title ">Menu Table</h4>
+                        <p class="card-category"> All last food items</p>
+
+                    </div>
+                    <ng-template #template>
+                        <div class="modal-header">
+                            <h4 class="modal-title pull-left">Menu</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodel()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div align="center">
+                            <div class="modal-body">
+                                <img src={{imashow}} height="380" width="520">
+
+                            </div>
+                            <hr size="20" color=#E5E8E8 />
+                        </div>
+                        <table class="table table-striped table table-hover">
+                            <thead>
+                                <tr align="center">
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Price/Baht</th>
+                                    <th *ngIf="admin()" scope="col">Option</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td align="center">{{nameshow}}</td>
+                                <td align="center">1</td>
+                                <td align="center">{{priceshow}}</td>
+                                <td align="center">
+                                    <button *ngIf="admin()" mat-button type="button" data-dismiss="alert"
+                                        aria-label="Close" (click)="openModalWithClassedit(edit)">
+                                        <i class="material-icons">build</i>
+                                    </button>
+                                    <button *ngIf="admin()" mat-icon-button (click)="deleterow()"
+                                        (click)="deleterow(iddex)">
+                                        <i class="material-icons">clear</i>
+                                    </button>
+                                </td>
+                            </tbody>
+
+                        </table>
+                        <hr size="20" color=#E5E8E8 />
+                        <div align="right" class="col-xs-8">
+                            <button class="btn btn-success btn-round"(click)="selectmenu()"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;&nbsp;Buy</button>
+                            <button class="btn btn-danger btn-round" (click)="hidemodel()"><i class="fa fa-close"></i>&nbsp;&nbsp;&nbsp;Close</button>
+                        </div>
+
+
+                    </ng-template>
+
+                    <ng-template #insert>
+                        <div class="modal-header">
+                            <h4 class="modal-title pull-left">ADD</h4>
+                            <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodel()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div align="center">
+                            <div class="modal-body">
+                                <img src="https://image.flaticon.com/icons/svg/137/137638.svg" height="80" width="180">
+                                <br /><br />
+                                <P>Add Menu To Website</P>
+                            </div>
+
+                        </div>
+                        <div class="modal-body">
+                        <form (ngSubmit)="onSubmitinsert($event)" style="left:500px;" align="center">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example">
+                                        <input matInput placeholder="Name" name="name">
+                                        <label style="color:tomato;" *ngIf="checkname()">* required</label>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example">
+                                        <input matInput placeholder="Spreed" type="number" name="spreed">
+                                        <label style="color:tomato;" *ngIf="checkspreed()">* required</label>
+
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example">
+
+                                        <input list="tys" matInput placeholder="Type-Spreed" type="text" name="tys">
+                                        <label style="color:tomato;" *ngIf="checktys()">* required</label>
+                                        <datalist id="tys">
+                                                <option value="danger">
+                                                <option value="warning">
+                                                <option value="success">
+                                            
+                                              </datalist>
+                                        
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="example">
+                                        <input matInput placeholder="Price" type="number" name="price">
+                                        <label style="color:tomato;" *ngIf="checkprice()">* required</label>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example">
+                                        <input list="ty"matInput placeholder="Type-Order" type="text" name="ty">
+                                        <label style="color:tomato;" *ngIf="checkty()">* required</label>
+                                        <datalist id="ty">
+                                                <option value="appetizers">
+                                                <option value="salads">
+                                                <option value="soup">
+                                                <option value="mains">
+                                                <option value="beverage">
+                                            
+                                              </datalist>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example">
+                                        <input matInput placeholder="image" type="text" name="im">
+                                        <label style="color:tomato;" *ngIf="checkim()">* required</label>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div align="right" class="col-xs-8">
+                                <button type="submit" class="btn btn-success btn-round"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirm</button>
+                                <button type="button" class="btn btn-danger btn-round"
+                                    (click)="hidemodel()"><i class="fa fa-close"></i>&nbsp;&nbsp;&nbsp;Close</button>
+
+                            </div>
+                        </form>
+                    </div>
+                    </ng-template>
+                    <ng-template #edit>
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left">Edit</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div align="center">
+                                <div class="modal-body">
+                                    <img src="https://image.flaticon.com/icons/svg/1159/1159633.svg" height="80" width="180">
+                                    <br /><br />
+                                    <P>Edit Menu To Website</P>
+                                </div>
+    
+                            </div>
+                            <div class="modal-body">
+                            <form (ngSubmit)="onSubmitedit($event)" style="left:500px;" align="center">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <mat-form-field class="example">
+                                                
+                                            <input matInput placeholder="Name" name="name"value={{nameshow}}>
+                                            <label style="color:tomato;" *ngIf="checkname()">* required</label>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <mat-form-field class="example">
+                                            <input matInput placeholder="Spreed" min=1 max=10 type="number" name="spreed"value={{spreedshow}}>
+                                            <label style="color:tomato;" *ngIf="checkspreed()">* required</label>
+    
+    
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <mat-form-field class="example">
+    
+                                            <input list="tys"matInput placeholder="Type-Spreed" type="text" name="tys"value={{type_spshow}}>
+                                            <label style="color:tomato;" *ngIf="checktys()">* required</label>
+                                            <datalist id="tys">
+                                                    <option value="danger">
+                                                    <option value="warning">
+                                                    <option value="success">
+                                                
+                                                  </datalist>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+    
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example">
+                                            <input matInput placeholder="Price"min=0 type="number" name="price"value={{priceshow}}>
+                                            <label style="color:tomato;" *ngIf="checkprice()">* required</label>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example">
+                                            <input list="ty" matInput placeholder="Type-Order" type="text" name="ty"value={{typeshow}}>
+                                            <label style="color:tomato;" *ngIf="checkty()">* required</label>
+                                            <datalist id="ty">
+                                                    <option value="appetizers">
+                                                    <option value="salads">
+                                                    <option value="soup">
+                                                    <option value="mains">
+                                                    <option value="beverage">
+                                                
+                                                  </datalist>
+                                        </mat-form-field>
+                                    </div>
+    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <mat-form-field class="example">
+                                            <input matInput placeholder="image" type="text" name="im"value={{imashow}}>
+                                            <label style="color:tomato;" *ngIf="checkim()">* required</label>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div align="right" class="col-xs-8">
+                                    <button type="submit" class="btn btn-success btn-round"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirm</button>
+                                    <button type="button" class="btn btn-danger btn-round"
+                                        (click)="modalRef.hide()"><i class="fa fa-close"></i>&nbsp;&nbsp;&nbsp;Close</button>
+    
+                                </div>
+                            </form>
+                        </div>
+                        </ng-template>
+
+
+                    <table class="table table-striped table table-hover">
+                        <thead>
+                            <tr align="center">
+                                <th scope="col">Order</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Spreed/Order</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Price/Baht</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let iddex of countries " (click)="openModalWithClass(template,iddex)">
+
+                                <td align="center" scope="row">{{ iddex.id }}</td>
+                                <td align="center"scope="row">
+                                    <!--<img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + iddex.flag" class="mr-2" style="width: 20px">-->
+                                    {{ iddex.Name }}
+                                </td>
+                                <td align="center"scope="row"  >
+                                    <span width="320">
+                                        <progressbar  max="10" [value]="(iddex.Spreed)" type="{{iddex.Type_s}}"
+                                        [striped]="true" [animate]="true"><i>{{iddex.Spreed}} / 10</i></progressbar>
+                                    </span>
+                                    
+                                </td>
+                                <!-- <span *ngIf="islast">default</span> -->
+                                <td align="center"scope="row">{{ iddex.Type }}</td>
+                                    <td align="center"scope="row">{{ iddex.Price | number }}</td>
+                               
+                                
+                          
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex justify-content-between p-2">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+
+                        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+                            <option [ngValue]="10">10 items per page</option>
+                            <option [ngValue]="15">15 items per page</option>
+                            <option [ngValue]="20">20 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+      
+       
+                
+          
+
+     
+
+<!-- <div>
+        <form [formGroup]="vform"  >
+            <input formControlName="id">
+            <input formControlName="title">
+            <input formControlName="body">
+            <button>Submit</button>
+   </form>
+    </div> -->
+<!-- <input (keyup)="onKey1($event)">-->

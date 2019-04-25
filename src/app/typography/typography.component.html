@@ -1,0 +1,130 @@
+<div class="main-content">
+  <div class="container-fluid">
+        <div class="col-lg-8 col-md-10 ml-auto mr-auto">
+                <!-- <div style="width:700px" class="input-group no-border">
+                    <input type="text" value="" class="form-control" (keyup)="onKey($event)"
+                        placeholder="Search For Date Bill Status...">
+                    <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                    
+                </div> -->
+                <div *ngIf="admin()" style="width:700px" class="input-group no-border">
+                        <input type="text" value="" class="form-control" (keyup)="onKey($event)"
+                            placeholder="Search For Date , Bill , User and Status...">
+                        <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                            <i class="material-icons">search</i>
+                            <div class="ripple-container"></div>
+                        </button>
+                        
+                    </div>
+                
+            </div>
+    <div class="card">
+        <div class="card-header card-header-warning">
+            <h4 class="card-title">Bill</h4>
+            <p class="card-category">Detailed showing the purchase</p>
+        </div>
+    
+        <ng-template #template>
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">List Menu</h4>
+                <button color=#E5E8E8 type="button" class="close pull-right" aria-label="Close"
+                    (click)="modalRef.hide()"></button>
+            </div>
+           
+            <table class="table table-striped table table-hover">
+                <thead>
+                    <tr align="center">
+                        <th scope="col">ID_Product</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Date</th>
+                        
+                        <!-- <th *ngIf="admin()" scope="col">Option</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let index of indexinbill" >
+                    <td align="center">{{index.Id_product}}</td>
+                    <td align="center">{{index.Name_product}}</td>
+                    <td align="center">1</td>
+                    <td align="center">{{index.Price}}</td> 
+                    <td align="center">{{index.Date}}</td> 
+                  </tr>
+                </tbody>
+
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="indexcollectionSize" [(page)]="indexpage" [pageSize]="indexpageSize">
+                    </ngb-pagination>
+        
+                    <select class="custom-select" style="width: auto" [(ngModel)]="indexpageSize">
+                        <option [ngValue]="5">5 items per page</option>
+                        <option [ngValue]="15">15 items per page</option>
+                        <option [ngValue]="25">25 items per page</option>
+                    </select>
+                </div>
+            <hr size="20" color=#E5E8E8 />
+            <div align="right" class="col-xs-8">
+                
+                <button class="btn btn-danger btn-round" (click)="hidemodel()"><i class="fa fa-close"></i>&nbsp;&nbsp;&nbsp;Close</button>
+            </div>
+        </ng-template>
+
+
+
+
+        <table class="table table-striped table table-hover">
+            <thead>
+                <tr align="center">
+                    <th scope="col">Bill</th>
+                    <th scope="col">Net Price</th>
+                    <th scope="col">Discount 10 %</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Bill Status</th>
+                    <th scope="col">User</th>
+                    <th scope="col" *ngIf="admin()">Check Bill </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let iddex of allbill" (click)="openModalWithClass(template,iddex)">
+
+                    <td align="center" scope="row">{{ iddex.Bill }}</td>
+                    <td align="center"> {{ iddex.Total-iddex.Discount }}</td>
+                    <td align="center"> {{ iddex.Discount }}</td>
+                    <td align="center">{{iddex.Date}}</td>
+                                            
+                    <!-- <span *ngIf="islast">default</span> -->
+                    <td align="center">{{ iddex.Status}}</td>
+                    <td align="center">{{iddex.User}}</td>
+                    <td align="center" *ngIf="admin()">
+                        <!-- <button *ngIf="iddex.Status=='No'" mat-button type="button" data-dismiss="alert"
+                            aria-label="Close" (click)="click()">
+                            <i class="material-icons">done</i>
+                        </button> -->
+                        <button *ngIf="iddex.Status=='No'"class=" btn btn-success btn-round " (click)="clicklist(iddex)"><i class="fa fa-check"></i>&nbsp;  Check Bill</button>
+                        
+                        
+                    </td>
+                
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+            </ngb-pagination>
+
+            <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+                <option [ngValue]="10">10 items per page</option>
+                <option [ngValue]="15">15 items per page</option>
+                <option [ngValue]="25">25 items per page</option>
+            </select>
+        </div>
+        </div>
+    </div>
+</div>
