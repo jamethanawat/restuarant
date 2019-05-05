@@ -186,7 +186,13 @@ check=0;
           console.log(response);
         }
       })
-      this.ngOnInit();
+      setTimeout(function () {
+        this.ngOnInit();
+        //location.reload();
+        this.showtable();
+
+      }.bind(this), 200);
+      // this.ngOnInit();
      //this.showtable();
       event.target.name.value = "";
       event.target.spreed.value = "";
@@ -200,7 +206,7 @@ check=0;
         'success'
       )
       this.showNotificationnew("Insert menu " +name +" to Website Success.");
-      this.ngOnInit();
+      //this.ngOnInit();
 
       const L = new Noti("Insert menu " +name +" to website")
       this.itemService.listnoti.unshift(L);
@@ -279,9 +285,15 @@ check=0;
       this.nameshow = event.target.name.value;
       this.priceshow = event.target.price.value;
       this.modalRef.hide();
-      this.ngOnInit();
-      //location.reload();
-      this.showtable();
+      setTimeout(function () {
+        this.ngOnInit();
+        //location.reload();
+        this.showtable();
+
+      }.bind(this), 200);
+      // this.ngOnInit();
+      // //location.reload();
+      // this.showtable();
       this.showNotificationnew("Edit Menu "+name + " Success.");
       const L = new Noti("Edit Menu "+name );
       this.itemService.listnoti.unshift(L);
@@ -346,9 +358,15 @@ check=0;
             console.log(response);
           }
         })
-        this.ngOnInit();
-        //location.reload();
-        this.showtable();
+        setTimeout(function () {
+          this.ngOnInit();
+          //location.reload();
+          this.showtable();
+
+        }.bind(this), 200);
+        // this.ngOnInit();
+        // //location.reload();
+        // this.showtable();
         this.modalRef.hide();
         this.hidemodel();
         
@@ -560,7 +578,7 @@ check=0;
 
     }, {
         type: 'success',
-        timer: 4000,
+        timer: 1500,
         placement: {
           from: 'top',
           align: 'right'
